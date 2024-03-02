@@ -1,0 +1,9 @@
+[user]
+	name = Dan Cocking
+	email = cockingdan@gmail.com
+[core]
+	editor = nvim
+[rerere]
+	enabled = true
+[fetch]
+	writeCommitGraph = true
