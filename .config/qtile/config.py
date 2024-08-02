@@ -74,7 +74,7 @@ keys = [
     # Most of our keybindings are in sxhkd file - except these
     #    Key([mod], "p", cmd_prev_group()),
     # Spawns
-    Key([mod], "Return", lazy.spawn("alacritty")),
+    Key([mod], "Return", lazy.spawn("kitty")),
     Key([mod], "w", lazy.spawn("firefox")),
     Key([mod], "e", lazy.spawn("emacs")),
     Key([mod], "s", lazy.spawn("spotify")),
@@ -289,7 +289,7 @@ for i in groups:
 
 def init_layout_theme():
     return {
-        "margin": 8,
+        "margin": 0,
         "border_width": 2,
         "border_focus": "#e1acff",
         "border_normal": "#1D2330",
@@ -376,7 +376,7 @@ def init_widgets_defaults():
 
 widget_defaults = init_widgets_defaults()
 
-
+triangle_padding = -5
 def init_widgets_list():
     prompt = "{0}@{1}: ".format(os.environ["USER"], socket.gethostname())
     widgets_list = [
@@ -493,7 +493,7 @@ def init_widgets_list():
             font="Ubuntu Mono",
             background=colors[0],
             foreground=colors[4],
-            padding=-1,
+            padding=triangle_padding,
             fontsize=37,
         ),
         widget.ThermalSensor(
@@ -508,7 +508,7 @@ def init_widgets_list():
             font="Ubuntu Mono",
             background=colors[4],
             foreground=colors[5],
-            padding=-1,
+            padding=triangle_padding,
             fontsize=37,
         ),
         widget.CheckUpdates(
@@ -529,7 +529,7 @@ def init_widgets_list():
             font="Ubuntu Mono",
             background=colors[5],
             foreground=colors[6],
-            padding=-1,
+            padding=triangle_padding,
             fontsize=37,
         ),
         widget.Memory(
@@ -544,7 +544,7 @@ def init_widgets_list():
             font="Ubuntu Mono",
             background=colors[6],
             foreground=colors[7],
-            padding=-1,
+            padding=triangle_padding,
             fontsize=37,
         ),
         widget.Volume(
@@ -555,31 +555,39 @@ def init_widgets_list():
             font="Ubuntu Mono",
             background=colors[7],
             foreground=colors[8],
-            padding=-1,
+            padding=triangle_padding,
             fontsize=37,
         ),
         widget.KeyboardLayout(
             foreground=colors[1], background=colors[8], fmt="Keyboard: {}", padding=5
         ),
-        # widget.Battery(
-        #    foreground=colors[1],
-        #    background=colors[8],
-        #    fmt="Battery: {}",
-        #    charge_char="↑",
-        #    discharge_char="↓",
-        #    empty_char="!",
-        #    full_char="|",
-        #    unknown_char="?",
-        #    format="{percent:2.0%} {char}",
-        #    padding=5,
-        #    update_interval=5,
-        # ),
         widget.TextBox(
             text="",
             font="Ubuntu Mono",
             background=colors[8],
+            foreground=colors[3],
+            padding=triangle_padding,
+            fontsize=37,
+        ),
+        widget.Battery(
+           foreground=colors[1],
+           background=colors[3],
+           fmt="Battery: {}",
+           charge_char="↑",
+           discharge_char="↓",
+           empty_char="!",
+           full_char="|",
+           unknown_char="?",
+           format="{percent:2.0%} {char}",
+           padding=5,
+           update_interval=5,
+        ),
+        widget.TextBox(
+            text="",
+            font="Ubuntu Mono",
+            background=colors[3],
             foreground=colors[9],
-            padding=-1,
+            padding=triangle_padding,
             fontsize=37,
         ),
         widget.Clock(
