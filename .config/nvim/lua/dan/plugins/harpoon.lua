@@ -8,9 +8,22 @@ return {
 
       harpoon:setup()
 
-      vim.keymap.set('n', '<leader>a', function()
+      vim.keymap.set('n', '<leader>at', function()
         harpoon:list():add()
       end)
+      vim.keymap.set('n', '<leader>an', function()
+        harpoon:list():replace_at(1, nil)
+      end)
+      vim.keymap.set('n', '<leader>ae', function()
+        harpoon:list():replace_at(2, nil)
+      end)
+      vim.keymap.set('n', '<leader>ai', function()
+        harpoon:list():replace_at(3, nil)
+      end)
+      vim.keymap.set('n', '<leader>ao', function()
+        harpoon:list():replace_at(4, nil)
+      end)
+
       vim.keymap.set('n', '<leader>h', function()
         harpoon.ui:toggle_quick_menu(harpoon:list())
       end)

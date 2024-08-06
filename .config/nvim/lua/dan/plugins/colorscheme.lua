@@ -1,10 +1,14 @@
-return { 
-'folke/tokyonight.nvim',
-lazy = false,
-priority = 1000,
-config = function()
-  vim.cmd.colorscheme 'tokyonight-night'
+return {
+  { 'folke/tokyonight.nvim' },
+  { 'Mofiqul/dracula.nvim' },
+  {
+    'maxmx03/solarized.nvim',
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.o.background = 'light'
 
-  vim.cmd.hi 'Comment gui=none'
-end,
+      vim.cmd.colorscheme 'dracula'
+    end,
+  },
 }

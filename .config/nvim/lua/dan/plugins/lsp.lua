@@ -4,6 +4,7 @@ return {
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
+    'kosayoda/nvim-lightbulb',
 
     { 'j-hui/fidget.nvim', opts = {} },
   },
@@ -14,7 +15,6 @@ return {
         local map = function(keys, func, desc)
           vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
         end
-
         map('gd', require('telescope.builtin').lsp_definitions, '[G]oto [D]efinition')
         map('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
         map('gI', require('telescope.builtin').lsp_implementations, '[G]oto [I]mplementation')
@@ -38,12 +38,18 @@ return {
             callback = vim.lsp.buf.clear_references,
           })
         end
+        require('nvim-lightbulb').setup {
+          autocmd = { enabled = true },
+        }
       end,
     })
 
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
-
+    local lsp = vim.lsp
+    lsp.handlers['textDocument/hover'] = lsp.with(vim.lsp.handlers.hover, {
+      border = 'rounded',
+    })
     local servers = {
       clangd = {},
       -- gopls = {},
@@ -75,7 +81,6 @@ return {
       'stylua',
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
-
     require('mason-lspconfig').setup {
       handlers = {
         function(server_name)

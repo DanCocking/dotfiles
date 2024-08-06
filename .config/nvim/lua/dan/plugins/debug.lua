@@ -21,11 +21,42 @@ return {
 
     -- Add your own debuggers here
     'leoluz/nvim-dap-go',
+    'mfussenegger/nvim-dap-python',
   },
   config = function()
     local dap = require 'dap'
     local dapui = require 'dapui'
 
+    -- dap.adapters.python = {
+    --   type = 'executable',
+    --   command = '~/.local/bin/debugpy',
+    --   args = { '-m', 'debugpy.adapter' },
+    -- }
+    dap.configurations.python = {
+      {
+        type = 'python',
+        request = 'launch',
+        name = 'Launch Python File',
+        command = '~/.local/bin/debugpy',
+        program = '${file}', -- Program to debug (current file)
+        cwd = '${workspaceFolder}', -- Set the working directory to the workspace folder
+        console = 'integratedTerminal', -- Use the integrated terminal for debugging
+        env = function()
+          local env = {}
+          -- Automatically add the cwd to PYTHONPATH
+          env.PYTHONPATH = vim.fn.getcwd() -- Get the current working directory
+          return env
+        end,
+        pythonPath = function()
+          -- Use the Python interpreter in the current virtual environment or specify the interpreter
+          local venv_path = os.getenv 'VIRTUAL_ENV' -- If using a virtual environment
+          if venv_path then
+            return venv_path .. '/bin/python' -- Adjust for your OS; this is for Unix-like systems
+          end
+          return '/usr/bin/python' -- Default Python interpreter if not in a virtual environment
+        end,
+      },
+    }
     require('mason-nvim-dap').setup {
       -- Makes a best effort to setup the various debuggers with
       -- reasonable debug configurations
